@@ -1,3 +1,4 @@
 # Environment variables
 *.env
 ngrok_recovery_codes.txt
+.DS_Store

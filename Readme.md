@@ -30,7 +30,7 @@ ngrok http http://127.0.0.1:5000
 `
 in your terminal
 - Update the "Webhook URL" in "Messaging API" from
-[Line Developer website](https://developers.line.biz/zh-hant/)
+[Line Developer website](https://developers.line.biz/zh-hant/), **remember to add /callback at the end of the URL**
 - You should update the URL everytime you run ngrok
 
 ## Run Line bot
@@ -43,12 +43,7 @@ python3 line_bot.py
 
 ## Update Fine Tuning Data in Line Bot
 - Enter any message to initialize the Line bor
-- Follow the Instruction on Line Bot, examples below
-![img](/img/chat.png)
-![img](/img/chat2.png)
-
-- You can store the data first after entering any conversation data. If there are enough data (more than 10), you can fine tune your GPT by entering your Openai API Key. Get API Key in [Openai API](https://platform.openai.com/api-keys)
-![img](/img/chat3.png)
-
+- Follow the Instruction on Line Bot
+- Get API Key in [Openai API](https://platform.openai.com/api-keys)
 - You can see the fine tuning process in [Openai platform](https://platform.openai.com/finetune/ftjob-wgRJDRzLhFy0jg3z1xopUBot?filter=all), and test your model by clicking "Playground" below
 ![img](/img/openai.png)
