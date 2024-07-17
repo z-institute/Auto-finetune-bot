@@ -178,7 +178,7 @@ def process_user_message(user_id, received_text):
         quick_reply = create_quick_replies(models)
         user_states[user_id] = 'waiting_for_chat_or_not'
     elif state == 'waiting_for_chat_or_not':
-        response_text = "聊天模式已啟動，現在起，回覆你的是你的模型 \n 備註：與模型對話需要 Instrction，會自動設定為目前儲存的 Instruction \n 你可以隨時點擊 Back to main page 回到主頁，並關閉聊天模式"
+        response_text = "聊天模式已啟動，現在起，回覆你的是你的模型 \n 備註：與模型對話需要 Instruction，會自動設定為目前儲存的 Instruction \n 你可以隨時點擊 Back to main page 回到主頁，並關閉聊天模式"
         quick_reply = create_quick_replies(['Back to main page'])
         user_states[user_id] = 'chatting_with_model'
         # update data and activate model
