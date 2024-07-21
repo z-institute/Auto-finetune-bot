@@ -385,4 +385,4 @@ def chat_with_model(user_id, user_message):
         return reply_message
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=7999)
