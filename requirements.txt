@@ -1,0 +1,5 @@
+Flask==2.2.2
+line_bot_sdk==3.11.0
+numpy==1.24.3
+openai==1.36.1
+tiktoken==0.7.0
