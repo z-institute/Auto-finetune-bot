@@ -3,11 +3,14 @@ import json
 import time
 import openai
 import textwrap
+from dotenv import load_dotenv
 from openai import OpenAI
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction
+
+load_dotenv()
 
 app = Flask(__name__)
 
