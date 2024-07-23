@@ -1,5 +1,55 @@
 # Auto Fine-tune Bot
 
+## Add Line bot to your contact 
+
+Line Bot ID: @368ivokx
+
+## Here are some examples
+
+- Enter any message at initial stage
+![img](/img/chat1.png)
+
+- Update your base model or use default model: gpt-3.5-turbo 
+![img](/img/chat2.png)
+
+- Update your OpenAI API key (required)
+![img](/img/chat3.png)
+
+- Update the instruction for the model (required)
+![img](/img/chat4.png)
+
+- Update the conversation data (at least 10 to fine-tune)
+![img](/img/chat5.png)
+
+- Delete the conversation data whenever you want
+![img](/img/chat6.png)
+
+- Check if all requirements have been completed with check data
+![img](/img/chat7.png)
+
+- After all requirements have been completed, you can fine-tune the model. 
+The chatbot will check required data in advance to avoid error in fine-tuning.
+![img](/img/chat8.png)
+
+- If you passed the checking process, the model will start fine-tuning and return the status every minute.
+The process usually takes 5-10 minutes with 10 coversation data and the time will increase with the amount of conversation data.
+![img](/img/chat9.png)
+
+- You can see the fine tuning process in [Openai platform](https://platform.openai.com/finetune/ftjob-wgRJDRzLhFy0jg3z1xopUBot?filter=all) as well.
+![img](/img/openai.png)
+
+- You can chat with the existing model or your own model (required data: API Key and Instruction)
+  - Chat with gpt-3.5-turbo
+    ![img](/img/chat10.png)
+    ![img](/img/chat11.png)
+  - Chat with your own model
+    ![img](/img/chat12.png)
+  - Press "Back to main page" whenever you want to stop chatting
+    ![img](/img/chat13.png)
+
+
+# You can also run your own bot 
+
 ## Clone the repository
 `
 git clone https://github.com/z-institute/Auto-finetune-bot.git
@@ -45,46 +95,3 @@ python3 line_bot.py
 - Enter any message to initialize the Line bor
 - Follow the Instruction on Line Bot
 - Get API Key in [Openai API](https://platform.openai.com/api-keys)
-
-## Here are some examples
-
-- Enter any message at initial stage
-![img](/img/chat1.png)
-
-- Update your base model or use default model: gpt-3.5-turbo 
-![img](/img/chat2.png)
-
-- Update your OpenAI API key (required)
-![img](/img/chat3.png)
-
-- Update the instruction for the model (required)
-![img](/img/chat4.png)
-
-- Update the conversation data (at least 10 to fine-tune)
-![img](/img/chat5.png)
-
-- Delete the conversation data whenever you want
-![img](/img/chat6.png)
-
-- Check if all requirements have been completed with check data
-![img](/img/chat7.png)
-
-- After all requirements have been completed, you can fine-tune the model. 
-The chatbot will check required data in advance to avoid error in fine-tuning.
-![img](/img/chat8.png)
-
-- If you passed the checking process, the model will start fine-tuning and return the status every minute.
-The process usually takes 5-10 minutes with 10 coversation data and the time will increase with the amount of conversation data.
-![img](/img/chat9.png)
-
-- You can see the fine tuning process in [Openai platform](https://platform.openai.com/finetune/ftjob-wgRJDRzLhFy0jg3z1xopUBot?filter=all) as well.
-![img](/img/openai.png)
-
-- You can chat with the existing model or your own model (required data: API Key and Instruction)
-  - Chat with gpt-3.5-turbo
-    ![img](/img/chat10.png)
-    ![img](/img/chat11.png)
-  - Chat with your own model
-    ![img](/img/chat12.png)
-  - Press "Back to main page" whenever you want to stop chatting
-    ![img](/img/chat13.png)
