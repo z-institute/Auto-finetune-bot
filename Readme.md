@@ -4,6 +4,11 @@
 
 Line Bot ID: @368ivokx
 
+## Update Fine Tuning Data in Line Bot
+- Enter any message to initialize the Line bor
+- Follow the Instruction on Line Bot
+- Get API Key in [Openai API](https://platform.openai.com/api-keys)
+
 ## Here are some examples
 
 - Enter any message at initial stage
@@ -90,8 +95,3 @@ in your terminal
 python3 line_bot.py
 `
 - Now, open Line and Update your data with Line bot
-
-## Update Fine Tuning Data in Line Bot
-- Enter any message to initialize the Line bor
-- Follow the Instruction on Line Bot
-- Get API Key in [Openai API](https://platform.openai.com/api-keys)
