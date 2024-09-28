@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "bot"
+version = "0.1.0"
+description = ""
+authors = ["tina1998612 <tleeae@connect.ust.hk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+line-bot-sdk = "^3.13.0"
+openai = "^1.50.2"
+python-dotenv = "^1.0.1"
+flask = "^3.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -9,6 +9,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction
+from collections import deque
 
 load_dotenv()
 
@@ -52,7 +53,15 @@ def handle_message(event):
     # Initialize user state if not present
     if user_id not in user_states:
         user_states[user_id] = "start"
-        user_data[user_id] = {'model':'gpt-3.5-turbo', 'api_key': None, 'instruction': None, 'conversation':{}, 'chat_model':['gpt-3.5-turbo', 'Back to main page'], 'chatting' : [False, None]}
+        user_data[user_id] = {
+            'model':'gpt-3.5-turbo', 
+            'api_key': None, 
+            'instruction': None, 
+            'conversation':{}, 
+            'chat_model':['gpt-3.5-turbo', 'Back to main page'], 
+            'chatting' : [False, None],
+            'chat_history': deque(maxlen=10)  # Add this line to store chat history
+        }
 
     received_text = event.message.text
     response_text, quick_reply = process_user_message(user_id, received_text)
@@ -182,15 +191,21 @@ def process_user_message(user_id, received_text):
         user_states[user_id] = 'waiting_for_chat_or_not'
     elif state == 'waiting_for_chat_or_not':
         response_text = "聊天模式已啟動，現在起，回覆你的是你的模型 \n 備註：與模型對話需要 Instruction，會自動設定為目前儲存的 Instruction \n 你可以隨時點擊 Back to main page 回到主頁，並關閉聊天模式"
-        quick_reply = create_quick_replies(['Back to main page'])
+        quick_reply = create_quick_replies(['Back to main page', 'Clear Chat History'])  # Add 'Clear Chat History' option
         user_states[user_id] = 'chatting_with_model'
         # update data and activate model
         model = received_text
         user_data[user_id]['chatting'][0], user_data[user_id]['chatting'][1] = True, model
+        # Clear chat history when starting a new chat
+        clear_chat_history(user_id)
     elif state == 'chatting_with_model' and user_data[user_id]['chatting'][0]:
-        user_message = received_text
-        response_text = chat_with_model(user_id, user_message)
-        quick_reply = create_quick_replies(['Back to main page'])
+        if received_text == 'Clear Chat History':
+            clear_chat_history(user_id)
+            response_text = "聊天記錄已清除。你可以開始新的對話了。"
+        else:
+            user_message = received_text
+            response_text = chat_with_model(user_id, user_message)
+        quick_reply = create_quick_replies(['Back to main page', 'Clear Chat History'])
 
     # Check data
     elif state == 'waiting_for_action' and received_text == 'Check data':
@@ -326,7 +341,10 @@ def fine_tuning(user_id):
         # Start fine-tuning
         response = client.fine_tuning.jobs.create(
             training_file=training_file_id,
-            model=model
+            model=model,
+            hyperparameters={
+                "learning_rate_multiplier": 0.7,
+            }
             )
         fine_tune_id = response.id
         print(f"Fine-tuning started, fine-tune ID: {fine_tune_id}")
@@ -371,18 +389,30 @@ def chat_with_model(user_id, user_message):
         
         model = user_data[user_id]['chatting'][1]
         system_message = user_data[user_id]['instruction']
+        
+        # Prepare the messages including chat history
+        messages = [{'role': 'system', 'content': system_message}]
+        messages.extend(user_data[user_id]['chat_history'])
+        messages.append({'role': 'user', 'content': user_message})
+        
         completion = client.chat.completions.create(
             model=model,
-            messages=[
-                {'role':'system', 'content':system_message},
-                {'role': 'user', 'content': user_message}
-            ]
+            messages=messages
         )
         reply_message = completion.choices[0].message.content
+        
+        # Update chat history
+        user_data[user_id]['chat_history'].append({'role': 'user', 'content': user_message})
+        user_data[user_id]['chat_history'].append({'role': 'assistant', 'content': reply_message})
+        
         return reply_message
     except openai.APIError as e:
         reply_message = "對話出錯，請確認資料是否有誤(模型名稱、API Key) \n 點擊 Back to main page 回到主頁"
         return reply_message
 
+# Add a new function to clear chat history
+def clear_chat_history(user_id):
+    user_data[user_id]['chat_history'].clear()
+
 if __name__ == "__main__":
-    app.run(debug=True, port=7999)
+    app.run(debug=True, port=8000)
